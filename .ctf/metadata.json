@@ -1,0 +1,14 @@
+{
+  "title": "OWASP SKF GraphQL Introspection",
+  "description": "A Flask blog whose data comes from a GraphQL API at /graphql. Introspection and the GraphiQL console are enabled.",
+  "question": "Use GraphQL introspection to map the schema and find the hidden information the blog does not show.",
+  "category": "WEB",
+  "difficulty": 1,
+  "evidence_kind": "SECRET",
+  "capabilities": [
+    "graphql",
+    "introspection",
+    "information-disclosure",
+    "api"
+  ]
+}

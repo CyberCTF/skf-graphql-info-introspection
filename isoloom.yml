@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://www.isoloom.com/schema/v1.json
+# OWASP SKF GraphQL Introspection (OWASP Security Knowledge Framework labs, by Glenn ten Cate, Riccardo ten Cate and the SKF contributors) as an Isoloom spec:
+# a Flask blog backed by a GraphQL API with introspection and GraphiQL left on (GraphQL information disclosure). The SKF lab folder python/graphql-info-introspection is
+# vendored unchanged in build/web/app/ and built by an overlay of its Dockerfile (build/web/Dockerfile).
+# `isoloom generate`, then `isoloom run docker`.
+version: 1
+name: skf-graphql-info-introspection
+
+networks:
+  lab: { cidr: 10.60.157.0/24, internet: false }
+
+machines:
+  web:
+    networks: { lab: 10 }
+    services: [{ port: 5000, name: web, http: true, publish: 5050 }]
+    resources: { cpus: 1, memory_mb: 256 }
+    docker:
+      build: build/web
+
+checks:
+  - name: the lab answers
+    http: http://web:5000/
+    wait: 120
+  - name: /graphql answers a query for the blog posts
+    script: checks/graphql.sh
+
+message: |
+  OWASP SKF GraphQL Introspection answers at http://localhost:{{ machines.web.services.0.publish }}/.
+  The blog reads its posts from /graphql. What else does the schema hold?
