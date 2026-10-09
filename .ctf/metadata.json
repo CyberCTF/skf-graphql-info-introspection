@@ -4,11 +4,5 @@
   "question": "Use GraphQL introspection to map the schema and find the hidden information the blog does not show.",
   "category": "WEB",
   "difficulty": 1,
-  "evidence_kind": "SECRET",
-  "capabilities": [
-    "graphql",
-    "introspection",
-    "information-disclosure",
-    "api"
-  ]
+  "evidence_kind": "SECRET"
 }
