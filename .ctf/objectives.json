@@ -1,0 +1,42 @@
+{
+  "objectives": [
+    {
+      "key": "main",
+      "title": "Read the flag",
+      "prompt": "Map the GraphQL schema and retrieve the flag (/ctf/flag).",
+      "check": {
+        "evidence": "SECRET",
+        "format": "FLAG{%s}"
+      },
+      "dev": "FLAG{dev-skf-graphql-info-introspection}",
+      "hints": [
+        "The API describes itself to anyone who asks.",
+        "Read about GraphQL introspection queries."
+      ],
+      "steps": [
+        {
+          "key": "route",
+          "title": "Find the API",
+          "prompt": "At which path is the GraphQL API served?",
+          "check": {
+            "answer": [
+              "/graphql",
+              "graphql"
+            ]
+          }
+        },
+        {
+          "key": "feature",
+          "title": "Name the feature",
+          "prompt": "Which GraphQL feature reveals the full schema?",
+          "check": {
+            "answer": [
+              "introspection",
+              "schema introspection"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
