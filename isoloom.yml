@@ -15,13 +15,16 @@ networks:
 machines:
   web:
     networks: { lab: 10 }
-    services: [{ port: 5000, name: web, http: true, publish: 5050 }]
+    ports: { web: { port: 5000, protocol: http, publish: 5050 } }
     resources: { cpus: 1, memory_mb: 256 }
-    inputs: [CTF_FLAG_MAIN]
-    volumes: { ctf: /ctf }   # the flag, written by ctf/flag.sh at every start
-    docker:
+    files:
+      # The player's flag, placed at each start where the old init script wrote it;
+      # without the input the inert dev placeholder.
+      - path: /ctf/flag
+        input: CTF_FLAG_MAIN
+        mode: "0444"
+    app:
       build: build/web
-      init: [ctf/flag.sh]
 
 checks:
   - name: the lab answers
@@ -31,5 +34,5 @@ checks:
     script: checks/graphql.sh
 
 message: |
-  OWASP SKF GraphQL Introspection answers at http://localhost:{{ machines.web.services.0.publish }}/.
+  OWASP SKF GraphQL Introspection answers at {{ machines.web.ports.web.url }}.
   The blog reads its posts from /graphql. What else does the schema hold?
